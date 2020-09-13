@@ -37,7 +37,7 @@ public class NetworkCheckerActivity extends AppCompatActivity {
 
         // initialize widgets
         check_internet_speed_button = findViewById(R.id.check_internet_speed_button);
-        aeroplane_mode_field = findViewById(R.id.aeroplane_mode_field);
+         aeroplane_mode_field = findViewById(R.id.aeroplane_mode_field);
         connection_type_field = findViewById(R.id.connection_type_field);
         provider_name_field = findViewById(R.id.provider_name_field);
         roaming_field = findViewById(R.id.roaming_field);
@@ -46,7 +46,6 @@ public class NetworkCheckerActivity extends AppCompatActivity {
         bluetooth_status_field = findViewById(R.id.bluetooth_status_field);
 
         getSignalStatus();
-        addBluetoothFunctionality();
 
         IntentFilter filter = new IntentFilter();
         filter.addAction(BluetoothDevice.ACTION_ACL_CONNECTED);
@@ -76,6 +75,7 @@ public class NetworkCheckerActivity extends AppCompatActivity {
                         isAirplaneModeOn();
                         updateValues();
                         checkWifi();
+                        getBluetoothStatus();
                     }
                 });
             }
@@ -118,35 +118,18 @@ public class NetworkCheckerActivity extends AppCompatActivity {
         }
     }
 
-    private void addBluetoothFunctionality() {
-        mReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                String action = intent.getAction();
-                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-
-                if (BluetoothDevice.ACTION_FOUND.equals(action)) {
-                    bluetooth_status_field.setText("STATUS : DEVICE FOUND");
-//           ... //Device found
-                }
-                else if (BluetoothDevice.ACTION_ACL_CONNECTED.equals(action)) {
-                    bluetooth_status_field.setText("STATUS : DEVICE CONNECTED");
-//           ... //Device is now connected
-                }
-                else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
-           //Done searching
-                    bluetooth_status_field.setText("STATUS : SEARCHING FINISHED");
-                }
-                else if (BluetoothDevice.ACTION_ACL_DISCONNECT_REQUESTED.equals(action)) {
-//           ... //Device is about to disconnect
-                    bluetooth_status_field.setText("STATUS : DISCONNECTING");
-                }
-                else if (BluetoothDevice.ACTION_ACL_DISCONNECTED.equals(action)) {
-//           ... //Device has disconnected
-                    bluetooth_status_field.setText("STATUS : DISCONNECTED");
-                }
-            }
-        };
+    private void getBluetoothStatus() {
+        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (mBluetoothAdapter == null) {
+            // Device does not support Bluetooth
+            bluetooth_status_field.setText("STATUS : Does not support Bluetooth");
+        } else if (!mBluetoothAdapter.isEnabled()) {
+            // Bluetooth is not enabled :)
+            bluetooth_status_field.setText("STATUS : DISABLED");
+        } else {
+            // Bluetooth is enabled
+            bluetooth_status_field.setText("STATUS : ENABLED");
+        }
     }
 
 }

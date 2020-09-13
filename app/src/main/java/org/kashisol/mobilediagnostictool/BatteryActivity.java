@@ -48,10 +48,6 @@ public class BatteryActivity extends AppCompatActivity {
             }
         }, 0, 1000);
 
-
-
-
-
     }
 
     private void batteryStatusExtractor() {

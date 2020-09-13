@@ -3,6 +3,9 @@
     package="org.kashisol.mobilediagnostictool">
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH_PRIVILEGED" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.LOCATION_HARDWARE" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
@@ -21,7 +24,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LocationActivity"></activity>
+        <service
+            android:name=".util.FetchAddressIntentService"
+            android:exported="false"></service>
+
+        <activity android:name=".LocationActivity" />
         <activity android:name=".CameraTwoActivity" />
         <activity android:name=".PhoneInfoActivity" />
         <activity android:name=".CameraActivity" />
