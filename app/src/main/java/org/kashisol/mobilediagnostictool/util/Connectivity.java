@@ -28,12 +28,22 @@ public class Connectivity {
         String[] toReturn = new String[6];
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = cm.getActiveNetworkInfo();
-        toReturn[0] = networkInfo.getTypeName();
-        toReturn[1] = String.valueOf(networkInfo.getDetailedState());
-        toReturn[2] = networkInfo.getExtraInfo();
-        toReturn[3] = "" + networkInfo.isConnected();
-        toReturn[4] = "" + networkInfo.isRoaming();
-        toReturn[5] = networkInfo.getSubtypeName();
+        try {
+            toReturn[0] = networkInfo.getTypeName();
+            toReturn[1] = String.valueOf(networkInfo.getDetailedState());
+            toReturn[2] = networkInfo.getExtraInfo();
+            toReturn[3] = "" + networkInfo.isConnected();
+            toReturn[4] = "" + networkInfo.isRoaming();
+            toReturn[5] = networkInfo.getSubtypeName();
+        } catch (Exception e) {
+            toReturn[0] = "No network";
+            toReturn[1] = "No network";
+            toReturn[2] = "No network";
+            toReturn[3] = "No network";
+            toReturn[4] = "No network";
+            toReturn[5] = "No network";
+        }
+
         return toReturn;
     }
 
