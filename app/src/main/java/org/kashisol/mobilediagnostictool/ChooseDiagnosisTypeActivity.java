@@ -12,7 +12,8 @@ public class ChooseDiagnosisTypeActivity extends AppCompatActivity {
 
     private Button storage_button, battery_button, network_button, cpu_button, apps_button,
             ram_button, screen_calibration_button, speaker_button, illumination_button
-            , motion_button, camera_button, phone_info_button, location_button;
+            , motion_button, camera_button, phone_info_button, location_button, proximity_button,
+            orientation_button, gravity_button, gyroscope_button, rotation_vector_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,43 @@ public class ChooseDiagnosisTypeActivity extends AppCompatActivity {
         camera_button = findViewById(R.id.camera_button);
         phone_info_button = findViewById(R.id.phone_info_button);
         location_button = findViewById(R.id.location_button);
+        proximity_button = findViewById(R.id.proximity_button);
+        orientation_button = findViewById(R.id.orientation_button);
+        gravity_button = findViewById(R.id.gravity_button);
+        gyroscope_button = findViewById(R.id.gyroscope_button);
+        rotation_vector_button = findViewById(R.id.rotation_vector_button);
+
+        // rotation vector button on click listener
+        rotation_vector_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ChooseDiagnosisTypeActivity.this, RotationVectorActivity.class));
+            }
+        });
+
+        // gyroscope button on click listener
+        gyroscope_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ChooseDiagnosisTypeActivity.this, GyroscopeActivity.class));
+            }
+        });
+
+        // gravity button on click listener
+        gravity_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ChooseDiagnosisTypeActivity.this, GravityActivity.class));
+            }
+        });
+
+        // orientation button on click listener
+        orientation_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ChooseDiagnosisTypeActivity.this, OrientationActivity.class));
+            }
+        });
 
         // location button on click listener
         location_button.setOnClickListener(new View.OnClickListener() {
@@ -136,6 +174,14 @@ public class ChooseDiagnosisTypeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(ChooseDiagnosisTypeActivity.this, StorageActivity.class));
+            }
+        });
+
+        // proximity sensor on click listener
+        proximity_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ChooseDiagnosisTypeActivity.this, ProximitySensorActivity.class));
             }
         });
     }

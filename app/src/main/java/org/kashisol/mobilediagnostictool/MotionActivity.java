@@ -8,6 +8,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.widget.TextView;
 
 public class MotionActivity extends AppCompatActivity implements SensorEventListener {
 
@@ -18,12 +19,23 @@ public class MotionActivity extends AppCompatActivity implements SensorEventList
     private final float[] rotationMatrix = new float[9];
     private final float[] orientationAngles = new float[3];
 
+    private TextView x_value_field, y_value_field, z_value_field;
+    private TextView x2_value_field, y2_value_field, z2_value_field;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_motion);
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+
+        x_value_field = findViewById(R.id.x_value_field);
+        y_value_field = findViewById(R.id.y_value_field);
+        z_value_field = findViewById(R.id.z_value_field);
+
+        x2_value_field = findViewById(R.id.x2_value_field);
+        y2_value_field = findViewById(R.id.y2_value_field);
+        z2_value_field = findViewById(R.id.z2_value_field);
     }
 
     @Override
@@ -31,15 +43,17 @@ public class MotionActivity extends AppCompatActivity implements SensorEventList
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
             System.arraycopy(event.values, 0, accelerometerReading,
                     0, accelerometerReading.length);
-            for (float balue: event.values) {
-                System.out.println("()()()() ACCELOROMETER : " + balue);
-            }
+            System.out.println("()()()() ACC LEN : " + event.values.length);
+            x_value_field.setText("" + event.values[0]);
+            y_value_field.setText("" + event.values[1]);
+            z_value_field.setText("" + event.values[2]);
         } else if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) {
             System.arraycopy(event.values, 0, magnetometerReading,
                     0, magnetometerReading.length);
-            for (float value: event.values) {
-                System.out.println("()()()() MAGNETOMETER : " + value);
-            }
+            System.out.println("()()()() MAG LEN : " + event.values.length);
+            x2_value_field.setText("" + event.values[0]);
+            y2_value_field.setText("" + event.values[1]);
+            z2_value_field.setText("" + event.values[2]);
         }
     }
 

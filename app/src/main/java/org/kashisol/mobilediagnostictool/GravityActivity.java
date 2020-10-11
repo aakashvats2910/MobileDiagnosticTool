@@ -10,30 +10,32 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.widget.TextView;
 
-public class IlluminationActivity extends AppCompatActivity implements SensorEventListener {
+public class GravityActivity extends AppCompatActivity implements SensorEventListener {
 
     private SensorManager sensorManager;
-    private TextView light_output_field;
-    private TextView max_min_field;
+    private TextView x_value_field, y_value_field, z_value_field;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_illumination);
+        setContentView(R.layout.activity_gravity);
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        light_output_field = findViewById(R.id.illumination_output_field);
-        max_min_field = findViewById(R.id.max_min_field);
+        x_value_field = findViewById(R.id.x_value_field);
+        y_value_field = findViewById(R.id.y_value_field);
+        z_value_field = findViewById(R.id.z_value_field);
     }
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-        if (sensorEvent.sensor.getType() == Sensor.TYPE_LIGHT) {
+        if (sensorEvent.sensor.getType() == Sensor.TYPE_GRAVITY) {
+            System.out.println("()()()() GRAV LEN LEN : " + sensorEvent.values.length);
             for (float value: sensorEvent.values) {
-                System.out.println("()()()() ILL : " + value);
-                if (value != 0)
-                    light_output_field.setText("" + value);
+                System.out.println("()()()() " + value);
             }
+            x_value_field.setText("" + sensorEvent.values[0]);
+            y_value_field.setText("" + sensorEvent.values[1]);
+            z_value_field.setText("" + sensorEvent.values[2]);
         }
     }
 
@@ -45,11 +47,10 @@ public class IlluminationActivity extends AppCompatActivity implements SensorEve
     @Override
     protected void onResume() {
         super.onResume();
-        Sensor lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
-        if (lightSensor != null) {
-            max_min_field.setText("Max. value " + lightSensor.getMaximumRange()
-                    + "");
-            sensorManager.registerListener((SensorEventListener) this, lightSensor,
+        Sensor proxSensor = sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY);
+        if (proxSensor != null) {
+            System.out.println("()()()() MAX VALUE : " + proxSensor.getMaximumRange());
+            sensorManager.registerListener((SensorEventListener) this, proxSensor,
                     SensorManager.SENSOR_DELAY_NORMAL, SensorManager.SENSOR_DELAY_UI);
         }
 

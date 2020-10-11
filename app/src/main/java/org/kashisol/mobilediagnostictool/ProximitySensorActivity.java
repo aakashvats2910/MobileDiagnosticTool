@@ -10,29 +10,29 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.widget.TextView;
 
-public class IlluminationActivity extends AppCompatActivity implements SensorEventListener {
+public class ProximitySensorActivity extends AppCompatActivity implements SensorEventListener {
 
     private SensorManager sensorManager;
-    private TextView light_output_field;
+    private TextView proximity_output_field;
     private TextView max_min_field;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_illumination);
+        setContentView(R.layout.activity_proximity_sensor);
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        light_output_field = findViewById(R.id.illumination_output_field);
+        proximity_output_field = findViewById(R.id.proximity_output_field);
         max_min_field = findViewById(R.id.max_min_field);
     }
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-        if (sensorEvent.sensor.getType() == Sensor.TYPE_LIGHT) {
+        if (sensorEvent.sensor.getType() == Sensor.TYPE_PROXIMITY) {
+            System.out.println("()()()() LEN LEN : " + sensorEvent.values.length);
             for (float value: sensorEvent.values) {
-                System.out.println("()()()() ILL : " + value);
-                if (value != 0)
-                    light_output_field.setText("" + value);
+                System.out.println("()()()() " + value);
+                proximity_output_field.setText("" + value);
             }
         }
     }
@@ -45,11 +45,10 @@ public class IlluminationActivity extends AppCompatActivity implements SensorEve
     @Override
     protected void onResume() {
         super.onResume();
-        Sensor lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
-        if (lightSensor != null) {
-            max_min_field.setText("Max. value " + lightSensor.getMaximumRange()
-                    + "");
-            sensorManager.registerListener((SensorEventListener) this, lightSensor,
+        Sensor proxSensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
+        if (proxSensor != null) {
+            max_min_field.setText("Max. value " + proxSensor.getMaximumRange() + "");
+            sensorManager.registerListener((SensorEventListener) this, proxSensor,
                     SensorManager.SENSOR_DELAY_NORMAL, SensorManager.SENSOR_DELAY_UI);
         }
 
