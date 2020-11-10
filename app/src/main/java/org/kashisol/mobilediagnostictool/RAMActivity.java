@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import com.timqi.sectorprogressview.SectorProgressView;
 
+import org.kashisol.mobilediagnostictool.database.DBStatic;
+
 public class RAMActivity extends AppCompatActivity {
 
     SectorProgressView ram_progress;
@@ -40,6 +42,11 @@ public class RAMActivity extends AppCompatActivity {
         ram_progress.setPercent((float) (usedram * 100 / totalram));
 
         System.out.println("()()()() " + availram + " | " + totalram + " | " + usedram);
+
+        String extra = "Total RAM: " + totalram
+                + "\nAvailable RAM: " + availram
+                + "\nUsed RAM: " + usedram;
+        DBStatic.insert("RAM Test", extra, getApplicationContext());
 
         // just fot the show and debugging
     }

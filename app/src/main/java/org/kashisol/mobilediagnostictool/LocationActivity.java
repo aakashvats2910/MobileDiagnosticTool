@@ -68,6 +68,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.kashisol.mobilediagnostictool.database.DBStatic;
 import org.kashisol.mobilediagnostictool.util.FetchAddressIntentService;
 
 import java.io.BufferedReader;
@@ -90,6 +91,7 @@ public class LocationActivity extends AppCompatActivity implements LocationListe
     FusedLocationProviderClient client;
     private TextView location_field;
     private LocationCallback locationCallback;
+    private boolean takeData = true;
 
     double lat, lng;
     private LocationManager locationManager;
@@ -182,6 +184,13 @@ public class LocationActivity extends AppCompatActivity implements LocationListe
         lng = (location.getLongitude());
         latitude_field.setText("LATITUDE : " + lat);
         longitude_field.setText("LONGITUDE : " + lng);
+        if (takeData) {
+            takeData = false;
+            String extra = "Latitude: " + lat
+                    + "\nLongitude: " + lng;
+            DBStatic.insert("Location Test", extra, getApplicationContext());
+        }
+        System.out.println("()()()() LAT LNG");
     }
 
     @Override

@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
+import org.kashisol.mobilediagnostictool.database.DBStatic;
 import org.kashisol.mobilediagnostictool.util.CPUAdapter;
 import org.kashisol.mobilediagnostictool.util.NewLocationCapture;
 
@@ -41,6 +42,8 @@ public class CPUActivity extends AppCompatActivity {
 
         parent_layout = findViewById(R.id.parent_layout);
         recycler_view = findViewById(R.id.recycler_view);
+
+        DBStatic.insert("CPU Test", "Diagnosis done", getApplicationContext());
 
         Context context;
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);

@@ -10,10 +10,13 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import org.kashisol.mobilediagnostictool.database.DBStatic;
+
 public class GravityActivity extends AppCompatActivity implements SensorEventListener {
 
     private SensorManager sensorManager;
     private TextView x_value_field, y_value_field, z_value_field;
+    private boolean takeData = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +39,13 @@ public class GravityActivity extends AppCompatActivity implements SensorEventLis
             x_value_field.setText("" + sensorEvent.values[0]);
             y_value_field.setText("" + sensorEvent.values[1]);
             z_value_field.setText("" + sensorEvent.values[2]);
+            if (takeData) {
+                takeData = false;
+                String extra = "X: " + sensorEvent.values[0]
+                        + "\nY: " + sensorEvent.values[1]
+                        + "\nZ: " + sensorEvent.values[2];
+                DBStatic.insert("Gravity Sensor Test",extra, getApplicationContext());
+            }
         }
     }
 

@@ -10,11 +10,14 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import org.kashisol.mobilediagnostictool.database.DBStatic;
+
 public class IlluminationActivity extends AppCompatActivity implements SensorEventListener {
 
     private SensorManager sensorManager;
     private TextView light_output_field;
     private TextView max_min_field;
+    private boolean takeData = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +34,14 @@ public class IlluminationActivity extends AppCompatActivity implements SensorEve
         if (sensorEvent.sensor.getType() == Sensor.TYPE_LIGHT) {
             for (float value: sensorEvent.values) {
                 System.out.println("()()()() ILL : " + value);
-                if (value != 0)
+                if (value != 0) {
                     light_output_field.setText("" + value);
+                    if (takeData) {
+                        takeData = false;
+                        String extra = "Value: " + value;
+                        DBStatic.insert("Light Sensor Test",extra, getApplicationContext());
+                    }
+                }
             }
         }
     }

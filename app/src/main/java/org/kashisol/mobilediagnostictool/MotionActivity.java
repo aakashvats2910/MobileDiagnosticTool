@@ -10,6 +10,8 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import org.kashisol.mobilediagnostictool.database.DBStatic;
+
 public class MotionActivity extends AppCompatActivity implements SensorEventListener {
 
     private SensorManager sensorManager;
@@ -21,6 +23,9 @@ public class MotionActivity extends AppCompatActivity implements SensorEventList
 
     private TextView x_value_field, y_value_field, z_value_field;
     private TextView x2_value_field, y2_value_field, z2_value_field;
+
+    private boolean takeData1 = true;
+    private boolean takeData2 = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +52,13 @@ public class MotionActivity extends AppCompatActivity implements SensorEventList
             x_value_field.setText("" + event.values[0]);
             y_value_field.setText("" + event.values[1]);
             z_value_field.setText("" + event.values[2]);
+            if (takeData1) {
+                takeData1 = false;
+                String extra = "X: " + event.values[0]
+                        + "\nY: " + event.values[1]
+                        + "\nZ: " + event.values[2];
+                DBStatic.insert("Accelerometer Test",extra, getApplicationContext());
+            }
         } else if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) {
             System.arraycopy(event.values, 0, magnetometerReading,
                     0, magnetometerReading.length);
@@ -54,6 +66,13 @@ public class MotionActivity extends AppCompatActivity implements SensorEventList
             x2_value_field.setText("" + event.values[0]);
             y2_value_field.setText("" + event.values[1]);
             z2_value_field.setText("" + event.values[2]);
+            if (takeData2) {
+                takeData2 = false;
+                String extra = "X: " + event.values[0]
+                        + "\nY: " + event.values[1]
+                        + "\nZ: " + event.values[2];
+                DBStatic.insert("Magnetometer Test",extra, getApplicationContext());
+            }
         }
     }
 

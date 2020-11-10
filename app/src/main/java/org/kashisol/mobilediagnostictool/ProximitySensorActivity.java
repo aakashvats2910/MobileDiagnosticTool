@@ -10,11 +10,14 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import org.kashisol.mobilediagnostictool.database.DBStatic;
+
 public class ProximitySensorActivity extends AppCompatActivity implements SensorEventListener {
 
     private SensorManager sensorManager;
     private TextView proximity_output_field;
     private TextView max_min_field;
+    private boolean takeData = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,11 @@ public class ProximitySensorActivity extends AppCompatActivity implements Sensor
             for (float value: sensorEvent.values) {
                 System.out.println("()()()() " + value);
                 proximity_output_field.setText("" + value);
+            }
+            if (takeData) {
+                takeData = false;
+                String extra = "Value: " + sensorEvent.values[0];
+                DBStatic.insert("Gyroscope Sensor Test",extra, getApplicationContext());
             }
         }
     }

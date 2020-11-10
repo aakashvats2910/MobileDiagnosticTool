@@ -26,6 +26,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.kashisol.mobilediagnostictool.database.DBStatic;
 import org.kashisol.mobilediagnostictool.util.Connectivity;
 
 import java.util.Timer;
@@ -44,6 +45,7 @@ public class NetworkCheckerActivity extends AppCompatActivity {
     private Button check_internet_speed_button, open_bluetooth_settings_button;
     private TextView aeroplane_mode_field, connection_type_field, provider_name_field, roaming_field, network_type_field, wifi_connected_field, bluetooth_status_field;
     private BroadcastReceiver mReceiver;
+    private boolean takeData = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +62,8 @@ public class NetworkCheckerActivity extends AppCompatActivity {
         wifi_connected_field = findViewById(R.id.wifi_connected_field);
         bluetooth_status_field = findViewById(R.id.bluetooth_status_field);
         open_bluetooth_settings_button = findViewById(R.id.open_bluetooth_settings_button);
+
+        DBStatic.insert("Network Test", "All things checked", getApplicationContext());
 
         // setting on click listener on bluetooth button to open the bluetooth settings.
         open_bluetooth_settings_button.setOnClickListener(new View.OnClickListener() {
@@ -143,17 +147,13 @@ public class NetworkCheckerActivity extends AppCompatActivity {
     }
 
 
-
-
-
-
-
     private void checkWifi() {
         wifi_connected_field.setText("CONNECTED : " + Connectivity.isConnectedWifi(getApplicationContext()));
     }
 
 
-//    @RequiresApi(api = Build.VERSION_CODES.N)
+    //    @RequiresApi(api = Build.VERSION_CODES.N)
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void getSignalStatus() {
         TelephonyManager mTelephonyManager;
         MyPhoneStateListener mPhoneStatelistener;
@@ -172,6 +172,16 @@ public class NetworkCheckerActivity extends AppCompatActivity {
 //            // for ActivityCompat#requestPermissions for more details.
 //            return;
 //        }
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
         switch (mTelephonyManager.getDataNetworkType()) {
             case NETWORK_TYPE_EDGE:
                 network_type_field.setText("Edge");

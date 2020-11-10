@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import org.kashisol.mobilediagnostictool.database.DBStatic;
+
 public class SpeakerActivity extends AppCompatActivity {
 
     private Button play_audio_button;
@@ -26,6 +28,8 @@ public class SpeakerActivity extends AppCompatActivity {
                 mediaPlayer.start(); // no need to call prepare(); create() does that for you
             }
         });
+
+        DBStatic.insert("Speaker Test", "Audio Played", getApplicationContext());
     }
 
     @Override

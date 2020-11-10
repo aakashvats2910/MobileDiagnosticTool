@@ -12,6 +12,10 @@ import android.widget.TextView;
 
 import com.timqi.sectorprogressview.ColorfulRingProgressView;
 
+import org.kashisol.mobilediagnostictool.database.DBStatic;
+import org.kashisol.mobilediagnostictool.database.Tests;
+
+import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -21,6 +25,8 @@ public class BatteryActivity extends AppCompatActivity {
     private Intent batteryStatus;
     private TextView charging_type_field, charging_status_field, charging_percentage_view, battery_health_view;
     Context context;
+    private Timer timer;
+    private boolean takeData = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +37,7 @@ public class BatteryActivity extends AppCompatActivity {
         // Initializing context;
         context = getApplicationContext();
 
+
         // Initializing the widgets.
         battery_progress = findViewById(R.id.battery_progress);
         charging_type_field = findViewById(R.id.charging_type_field);
@@ -40,14 +47,13 @@ public class BatteryActivity extends AppCompatActivity {
 
         // Business logic for taking battery info
 
-        Timer timer = new Timer();
+        timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 batteryStatusExtractor();
             }
         }, 0, 1000);
-
     }
 
     private void batteryStatusExtractor() {
@@ -70,6 +76,16 @@ public class BatteryActivity extends AppCompatActivity {
         int scale = batteryStatus.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
 
         final float batteryPct = level * 100 / (float)scale;
+
+        if (takeData) {
+            takeData = false;
+            String extra = "Percentage: " + batteryPct
+                    + "\nIs Charging: " + isCharging
+                    + "\nUSB Charging: " + usbCharge
+                    + "\nAC Charging: " + acCharge;
+            DBStatic.insert("BatteryTest ", extra, getApplicationContext());
+            System.out.println("()()()()INSERTED INSERTED: " + extra);
+        }
 
         // How is battery health?
         registerReceiver(new BroadcastReceiver() {
@@ -151,5 +167,11 @@ public class BatteryActivity extends AppCompatActivity {
         System.out.println("()()()() IS CHARGING : " + isCharging);
         System.out.println("()()()() AC : " + acCharge);
         System.out.println("()()()() DC : " + usbCharge);
+    }
+
+    @Override
+    public void onBackPressed() {
+        timer.cancel();
+        super.onBackPressed();
     }
 }

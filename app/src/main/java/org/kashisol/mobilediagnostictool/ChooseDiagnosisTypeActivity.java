@@ -13,7 +13,8 @@ public class ChooseDiagnosisTypeActivity extends AppCompatActivity {
     private Button storage_button, battery_button, network_button, cpu_button, apps_button,
             ram_button, screen_calibration_button, speaker_button, illumination_button
             , motion_button, camera_button, phone_info_button, location_button, proximity_button,
-            orientation_button, gravity_button, gyroscope_button, rotation_vector_button;
+            orientation_button, gravity_button, gyroscope_button, rotation_vector_button,
+            database_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,15 @@ public class ChooseDiagnosisTypeActivity extends AppCompatActivity {
         gravity_button = findViewById(R.id.gravity_button);
         gyroscope_button = findViewById(R.id.gyroscope_button);
         rotation_vector_button = findViewById(R.id.rotation_vector_button);
+        database_button = findViewById(R.id.database_button);
+
+        // tests report button on click listener
+        database_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ChooseDiagnosisTypeActivity.this, TestsReportActivity.class));
+            }
+        });
 
         // rotation vector button on click listener
         rotation_vector_button.setOnClickListener(new View.OnClickListener() {

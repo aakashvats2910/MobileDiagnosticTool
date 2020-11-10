@@ -12,6 +12,8 @@ import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.widget.TextView;
 
+import org.kashisol.mobilediagnostictool.database.DBStatic;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -42,6 +44,13 @@ public class PhoneInfoActivity extends AppCompatActivity {
         device_info_field.setText("DEVICE : " + Build.MANUFACTURER);
         model_no_field.setText("MODEL NO. : " + Build.MODEL);
         kernel_info_field.setText("KERNE INFO : " + readKernelVersion());
+
+        String extra = "Android Version: " + Build.VERSION.RELEASE
+                + "\nBuild OS: " + Build.VERSION.BASE_OS
+                + "\nDevice: " + Build.MANUFACTURER
+                + "\nModel No: " + Build.MODEL
+                + "\nKernel Info: " + readKernelVersion();
+        DBStatic.insert("Phone Info Test", extra, getApplicationContext());
 
         System.out.println("()()()() BUILD DEVICE : " + Build.DEVICE);
         System.out.println("()()()() MODL " + Build.MODEL);
