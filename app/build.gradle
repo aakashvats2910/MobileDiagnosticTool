@@ -35,6 +35,7 @@ dependencies {
 
     // google location service
     implementation 'com.google.android.gms:play-services-location:17.0.0'
+    implementation project(path: ':diagnostic_lib')
 
     def room_version = "2.2.5"
 

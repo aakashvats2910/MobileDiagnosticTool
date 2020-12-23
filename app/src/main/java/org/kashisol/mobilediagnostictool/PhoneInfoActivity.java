@@ -57,7 +57,14 @@ public class PhoneInfoActivity extends AppCompatActivity {
 
         if (ActivityCompat.checkSelfPermission(PhoneInfoActivity.this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(PhoneInfoActivity.this, new String[]{Manifest.permission.READ_PHONE_STATE}, IMEI_RQST);
-        } else getImeiDetails();
+        } else {
+            try {
+                getImeiDetails();
+            } catch (Exception e) {
+                imei_two_field.setText("IMEI 2: NO imei on emulator");
+                imei_one_field.setText("IMEI 1: NO imei on emulator");
+            }
+        }
 
     }
 

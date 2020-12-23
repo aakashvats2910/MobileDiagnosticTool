@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.timqi.sectorprogressview.ColorfulRingProgressView;
 
+import org.kashisol.diagnostic_lib.BatteryInfo;
 import org.kashisol.mobilediagnostictool.database.DBStatic;
 import org.kashisol.mobilediagnostictool.database.Tests;
 
@@ -46,6 +47,18 @@ public class BatteryActivity extends AppCompatActivity {
         battery_health_view = findViewById(R.id.battery_health_view);
 
         // Business logic for taking battery info
+
+//        BatteryInfo batteryInfo = new BatteryInfo(getApplicationContext()) {
+//            @Override
+//            public void onBatteryHealthChanged(int healthCode, String batteryHealth) {
+////                System.out.println("()()()() API API 1: " + healthCode + " :: " + batteryHealth);
+//            }
+//
+//            @Override
+//            public void onChargingStatusChanged(int statusCode, String chargingStatus) {
+//                System.out.println("()()()() API API 2: " + statusCode + " :: " + chargingStatus);
+//            }
+//        };
 
         timer = new Timer();
         timer.schedule(new TimerTask() {

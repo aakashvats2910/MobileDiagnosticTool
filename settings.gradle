@@ -1,2 +1,3 @@
+include ':diagnostic_lib'
 include ':app'
 rootProject.name = "Mobile Diagnostic Tool"

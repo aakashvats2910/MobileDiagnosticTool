@@ -1,7 +1,9 @@
 package org.kashisol.mobilediagnostictool;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -42,6 +44,16 @@ public class ChooseDiagnosisTypeActivity extends AppCompatActivity {
         gyroscope_button = findViewById(R.id.gyroscope_button);
         rotation_vector_button = findViewById(R.id.rotation_vector_button);
         database_button = findViewById(R.id.database_button);
+
+        ActivityCompat.requestPermissions(ChooseDiagnosisTypeActivity.this,
+                new String[] {
+                        Manifest.permission.ACCESS_NETWORK_STATE,
+                        Manifest.permission.BLUETOOTH,
+                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                        Manifest.permission.CAMERA,
+                        Manifest.permission.BLUETOOTH_PRIVILEGED,
+                        Manifest.permission.READ_PHONE_STATE
+                }, 56);
 
         // tests report button on click listener
         database_button.setOnClickListener(new View.OnClickListener() {
