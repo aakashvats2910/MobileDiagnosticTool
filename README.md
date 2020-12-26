@@ -80,6 +80,7 @@ BatteryInfo batteryInfo = new BatteryInfo(context) {
 ```
 
 <h3> RAMInfo </h3>
+
 @return double, to get total RAM (in MB)
 ```java
 RAMInfo.totalRAMInMB(context);
