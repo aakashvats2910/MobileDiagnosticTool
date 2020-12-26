@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.timqi.sectorprogressview.SectorProgressView;
 
+import org.kashisol.diagnostic_lib.RAMInfo;
 import org.kashisol.mobilediagnostictool.database.DBStatic;
 
 public class RAMActivity extends AppCompatActivity {

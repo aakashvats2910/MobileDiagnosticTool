@@ -10,8 +10,6 @@ import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
 
-import org.kashisol.mobilediagnostictool.database.DBStatic;
-
 public class MainActivity extends AppCompatActivity {
 
     private Button start_button;
@@ -29,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, ChooseDiagnosisTypeActivity.class));
             }
         });
+
+//        LocationInfo locationInfo = new LocationInfo(getApplicationContext());
 
 //        String extstoragedir = Environment.getExternalStorageDirectory().toString(); /storage/emulated/0
         String extstoragedir = Environment.getDataDirectory().getParent();

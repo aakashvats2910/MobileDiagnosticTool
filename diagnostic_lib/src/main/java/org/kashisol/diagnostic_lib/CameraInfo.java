@@ -27,7 +27,7 @@ import androidx.core.app.ActivityCompat;
 
 import java.util.Arrays;
 
-public class Camera {
+public class CameraInfo {
 
     private String cameraId;
     protected CameraDevice cameraDevice;
@@ -40,12 +40,13 @@ public class Camera {
 
     private Context mContext;
     private Activity mActivity;
-    private int mCameraInt = 0; // default rear camera for testing
+    private int mCameraInt = 0; // default rear camera defined by 0 (by system by default);
     private TextureView mTextureView;
 
-    public Camera(Context context, TextureView textureView) {
+    public CameraInfo(Context context, TextureView textureView) {
         this.mContext = context;
         this.mTextureView = textureView;
+        grantPermissionForCamera();
     }
 
     public void startRearCamera() {
@@ -56,6 +57,19 @@ public class Camera {
     public void startFrontCamera() {
         mCameraInt = 1;
         initialize(mTextureView);
+    }
+
+    private void grantPermissionForCamera() {
+        // Add permission for camera and let user grant the permission
+        if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(mContext,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions((Activity)mContext,
+                    new String[]{Manifest.permission.CAMERA,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CAMERA_PERMISSION);
+        }
     }
 
     private void initialize(TextureView textureView) {
